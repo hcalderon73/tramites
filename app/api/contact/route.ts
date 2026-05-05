@@ -1,18 +1,25 @@
-import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// No inicializar Resend aquí - hacerlo dentro del handler
+// Esto evita errores durante el build
 
 export async function POST(request: Request) {
   try {
+    // Importar Resend dinámicamente dentro del handler
+    const { Resend } = await import('resend');
+    
     // Verificar API key
-    if (!process.env.RESEND_API_KEY) {
-      console.error('RESEND_API_KEY no configurada');
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.error('❌ RESEND_API_KEY no configurada');
       return NextResponse.json(
-        { error: 'Error de configuración del servidor' },
+        { error: 'Error de configuración del servidor: API key no configurada' },
         { status: 500 }
       );
     }
+
+    // Inicializar Resend aquí, no en el scope global
+    const resend = new Resend(apiKey);
 
     const body = await request.json();
     const { nombre, apellido, email, telefono, servicio, pais, mensaje } = body;
@@ -33,9 +40,9 @@ export async function POST(request: Request) {
       );
     }
 
-    // Configuración para cuenta gratuita
-    const fromEmail = 'onboarding@resend.dev';
-    const toEmail = 'calderonhumberto@gmail.com'; // Tu email verificado
+    // Configuración
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+    const toEmail = process.env.RESEND_TO_EMAIL || 'calderonhumberto@gmail.com';
 
     const emailContent = `
 =====================================
@@ -59,11 +66,10 @@ ${mensaje}
 
 -------------------------------------
 Fecha: ${new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' })}
-IP: ${request.headers.get('x-forwarded-for') || 'No disponible'}
 -------------------------------------
     `;
 
-    console.log('Enviando email...');
+    console.log('📧 Enviando email...');
     console.log('From:', fromEmail);
     console.log('To:', toEmail);
 
@@ -76,7 +82,7 @@ IP: ${request.headers.get('x-forwarded-for') || 'No disponible'}
     });
 
     if (error) {
-      console.error('Error Resend:', error);
+      console.error('❌ Error Resend:', error);
       return NextResponse.json(
         { 
           error: 'Error al enviar el email', 
@@ -86,7 +92,7 @@ IP: ${request.headers.get('x-forwarded-for') || 'No disponible'}
       );
     }
 
-    console.log('✅ Email enviado exitosamente:', data);
+    console.log('✅ Email enviado exitosamente');
 
     return NextResponse.json(
       { 
@@ -98,7 +104,7 @@ IP: ${request.headers.get('x-forwarded-for') || 'No disponible'}
     );
 
   } catch (error: any) {
-    console.error('Error servidor:', error);
+    console.error('❌ Error servidor:', error);
     return NextResponse.json(
       { 
         error: 'Error interno del servidor',
