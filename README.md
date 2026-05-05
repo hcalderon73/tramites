@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Trámites Legales Venezuela - Next.js
 
-## Getting Started
+Sitio web para gestión de trámites documentales para venezolanos en el exterior.
+Migrado a Next.js 16 + TypeScript + Tailwind CSS.
 
-First, run the development server:
+## 🚀 Deploy en Vercel
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Verificar build local
+npm run build
+
+# Deploy con Vercel CLI
+npx vercel --prod
+
+# O conecta tu repo GitHub en vercel.com/new
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📁 Estructura
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+app/
+├── page.tsx                    # Home
+├── servicios/
+│   ├── page.tsx               # Listado de servicios
+│   ├── acta-nacimiento/
+│   │   └── page.tsx           # Detalle servicio
+│   └── antecedentes-penales/
+│       └── page.tsx           # Detalle servicio
+├── contacto/
+│   └── page.tsx               # Página de contacto
+└── layout.tsx                 # Layout principal
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+components/
+├── layout/
+│   ├── Navbar.tsx             # Navegación
+│   └── Footer.tsx             # Pie de página
+└── ui/
+    ├── Button.tsx             # Botón reutilizable
+    ├── Card.tsx               # Tarjeta reutilizable
+    └── Badge.tsx              # Badge reutilizable
 
-## Learn More
+content/
+├── content.md                 # Contenido de servicios
+└── paises.md                  # Información por países
 
-To learn more about Next.js, take a look at the following resources:
+lib/
+└── db.ts                      # Base de datos (Neon/mock)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✅ Páginas Creadas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [x] Home (Hero, servicios, características, testimonios, CTA)
+- [x] Servicios (listado completo)
+- [x] Contacto (formulario + info)
+- [x] Acta de Nacimiento (detalle)
+- [x] Antecedentes Penales (detalle)
 
-## Deploy on Vercel
+## 🛠️ Tecnologías
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Next.js 16 (App Router)
+- TypeScript
+- Tailwind CSS v4
+- Lucide React (iconos)
+- Neon Database (opcional)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📝 Notas
+
+- El sitio usa datos mock por defecto (no requiere DB para funcionar)
+- Para persistencia real, configurar DATABASE_URL en Vercel
+- Todas las páginas son estáticas excepto las que usen API routes
+
+## 🌐 URL en Vercel
+
+Después del deploy: `https://tu-proyecto.vercel.app`
