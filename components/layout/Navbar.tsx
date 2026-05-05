@@ -62,9 +62,6 @@ export default function Navbar() {
                 <span className="text-xl font-bold text-gray-900 dark:text-white">
                   Trámites Legales
                 </span>
-                <span className="text-xs text-blue-600 dark:text-blue-400 font-medium">
-                  Venezuela - España
-                </span>
               </div>
             </Link>
           </div>
