@@ -15,7 +15,6 @@ export default function Footer() {
               </div>
               <div>
                 <h3 className="text-lg font-bold text-white">Trámites Legales</h3>
-                <p className="text-xs text-blue-400">Venezuela - España</p>
               </div>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
@@ -113,10 +112,13 @@ export default function Footer() {
             </p>
             <div className="flex space-x-6 text-sm text-gray-500">
               <Link href="/terminos" className="hover:text-white transition-colors">
-                Términos de Uso
+                Términos
               </Link>
               <Link href="/privacidad" className="hover:text-white transition-colors">
-                Política de Privacidad
+                Privacidad
+              </Link>
+              <Link href="/aviso-legal" className="hover:text-white transition-colors">
+                Aviso Legal
               </Link>
             </div>
           </div>
