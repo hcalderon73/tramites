@@ -63,7 +63,9 @@ export default function ContactoContent() {
         });
       } else {
         setStatus('error');
-        setErrorMessage(data.error || 'Error al enviar el mensaje');
+        const errorDetail = data.details ? `${data.error}: ${data.details}` : data.error;
+        setErrorMessage(errorDetail || 'Error al enviar el mensaje');
+        console.error('Error del servidor:', data);
       }
     } catch (error) {
       setStatus('error');
